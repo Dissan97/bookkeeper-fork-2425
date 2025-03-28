@@ -26,3 +26,9 @@ jobs:
 
       - name: Code Coverage
         run: mvn verify -Pjacoco-profile
+        
+      - name: Upload Code Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: target/site/jacoco-aggregate
