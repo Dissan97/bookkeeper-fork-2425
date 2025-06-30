@@ -14,24 +14,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 11 (Amazon Corretto)
+      - name: Set up JDK 8 (Amazon Corretto)
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'corretto'
           cache: maven 
 
+      - name: Maven validate
+        run: mvn validate
+
       - name: Build with Maven
         run: mvn clean install
-
-      - name: Code Coverage
-        run: mvn verify -Pjacoco-profile
-
-      - name: Verify Code Coverage Report Exists
-        run: ls -R target/site/ || true
-
-      - name: Upload Code Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: target/site/jacoco-aggregate
