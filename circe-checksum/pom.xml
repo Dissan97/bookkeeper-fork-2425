@@ -171,7 +171,7 @@
             <artifactId>nar-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
-              <skip>false</skip>
+              <skip>true</skip>
             </configuration>
           </plugin>
         </plugins>
@@ -191,7 +191,7 @@
             <artifactId>nar-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
-              <skip>false</skip>
+              <skip>true</skip>
             </configuration>
           </plugin>
         </plugins>
