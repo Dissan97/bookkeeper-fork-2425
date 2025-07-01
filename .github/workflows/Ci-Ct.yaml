@@ -24,5 +24,9 @@ jobs:
       - name: Maven validate
         run: mvn validate
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Maven install pre-test
+        run: mvn install -DskipTests
+
+      - name: Test BookKeeper server module
+        working-directory: ./bookkeeper-server
+        run: mvn test

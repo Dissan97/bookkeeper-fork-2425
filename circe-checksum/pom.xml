@@ -54,13 +54,13 @@
       <groupId>io.netty</groupId>
       <artifactId>netty-buffer</artifactId>
     </dependency>
-<!--
+
     <dependency>
       <groupId>org.apache.bookkeeper</groupId>
       <artifactId>testtools</artifactId>
       <version>${project.parent.version}</version>
       <scope>test</scope>
-    </dependency>-->
+    </dependency>
   </dependencies>
 
   <build>
@@ -171,7 +171,7 @@
             <artifactId>nar-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
-              <skip>true</skip>
+              <skip>false</skip>
             </configuration>
           </plugin>
         </plugins>
