@@ -8,12 +8,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.apache.bookkeeper.client.SUTForBookkeeper.ENS_SIZE;
 import static org.apache.bookkeeper.client.SUTForBookkeeper.ZK_TIMEOUT;
 
 public class AbsBkCreate {
-    private static SUTForBookkeeper sut;
+    private SUTForBookkeeper sut;
     protected final int ensSize;
     protected final int wQSize;
     protected final int aQSize;
@@ -22,8 +23,15 @@ public class AbsBkCreate {
     protected final Map<String, byte[]> customMetadata;
     protected final BkCreationTest.TestOutcome testOutcome;
     protected BookKeeper bkClient;
-    protected static long idCounter = 0L;
-    public AbsBkCreate(int ensSize, int wQSize, int aQSize, BookKeeper.DigestType digestType, byte[] passwd, Map<String, byte[]> customMetadata, BkCreationTest.TestOutcome testOutcome) {
+    protected AtomicLong idCounter = new AtomicLong(0L);
+
+    public AbsBkCreate(){
+        this(3, 3, 3, BookKeeper.DigestType.DUMMY, "password".getBytes(), null,
+                TestOutcome.VALID);
+    };
+
+    public AbsBkCreate(int ensSize, int wQSize, int aQSize, BookKeeper.DigestType digestType,
+                       byte[] passwd, Map<String, byte[]> customMetadata, BkCreationTest.TestOutcome testOutcome) {
         this.ensSize = ensSize;
         this.wQSize = wQSize;
         this.aQSize = aQSize;
@@ -35,12 +43,13 @@ public class AbsBkCreate {
 
     @BeforeClass
     public static void setUpSUT() throws Exception {
-        sut = SUTForBookkeeper.getInstance(ENS_SIZE);
-        sut.setUp();
+
     }
 
     @Before
     public void setUp() throws Exception {
+        sut = SUTForBookkeeper.getInstance(ENS_SIZE);
+        sut.setUp();
         ClientConfiguration conf = TestBKConfiguration.newClientConfiguration();
         conf.setMetadataServiceUri(sut.getZooKeeperCluster().getMetadataServiceUri());
         conf.setZkTimeout(ZK_TIMEOUT);
@@ -51,14 +60,10 @@ public class AbsBkCreate {
     public void tearDown() throws Exception {
         // cleanup
         this.bkClient.close();
-
-    }
-
-
-    @AfterClass
-    public static void tearDownSUT() throws Exception {
         sut.tearDown();
     }
+
+
 
 
     public enum TestOutcome {

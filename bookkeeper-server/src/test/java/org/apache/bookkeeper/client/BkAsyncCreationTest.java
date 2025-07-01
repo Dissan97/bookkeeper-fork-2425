@@ -164,7 +164,7 @@ public class BkAsyncCreationTest extends AbsBkCreate {
                     this.cb, this.ctx, this.customMetadata);
             try (LedgerHandle lh = SyncCallbackUtils.waitForResult(this.future)) {
                 Assert.assertNotNull(lh);
-                passed = (lh.getId() == idCounter++) && testOutcome.equals(TestOutcome.VALID);
+                passed = (lh.getId() == idCounter.getAndIncrement()) && testOutcome.equals(TestOutcome.VALID);
             }
         } catch (InterruptedException e) {
             fail();

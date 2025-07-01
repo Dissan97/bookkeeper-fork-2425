@@ -218,7 +218,7 @@
     </sonar.coverage.jacoco.xmlReportPaths>
     <argLine>-Xmx2G -Djwava.net.preferIPv4Stack=true -Dio.netty.leakDetection.level=paranoid ${test.additional.args}</argLine>
     <version.jacoco-maven-plugin>0.8.12</version.jacoco-maven-plugin>
-    <version.pitest-maven>1.17.4</version.pitest-maven>
+    <version.pitest-maven>1.4.11</version.pitest-maven>
   </properties>
 
   <!-- dependency definitions -->
@@ -891,12 +891,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- DISSAN EVOSUITE -->
-    <dependency>
-      <groupId>org.evosuite</groupId>
-      <artifactId>evosuite-standalone-runtime</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
-    </dependency>
   </dependencies>
 
   <build>
@@ -1192,22 +1186,6 @@
             <removeSemicolons/>
           </groovy>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.evosuite.plugins</groupId>
-        <artifactId>evosuite-maven-plugin</artifactId>
-        <version>1.2.1-SNAPSHOT</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>
-                prepare
-              </goal>
-            </goals>
-            <phase> process-test-classes</phase>
-
-          </execution>
-        </executions>
       </plugin>
 
       <plugin>

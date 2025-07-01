@@ -100,7 +100,7 @@ public class BkCreationTest extends AbsBkCreate{
                     this.ensSize, this.wQSize, this.aQSize,
                     digestType, passwd, customMetadata
             );
-            check = lh.getId() == idCounter++;
+            check = lh.getId() == idCounter.getAndIncrement();
             lh.close();
         } catch (BKException e) {
             check = e.getCode() == BKException.Code.NotEnoughBookiesException;
@@ -114,6 +114,29 @@ public class BkCreationTest extends AbsBkCreate{
         assertTrue(check);
     }
 
+    @Test
+    public void testAdv() {
+        boolean check = false;
+        try {
+
+            LedgerHandle lh = bkClient.createLedgerAdv(
+                    this.ensSize, this.wQSize, this.aQSize,
+                    digestType, passwd, customMetadata
+            );
+            assertTrue(lh instanceof LedgerHandleAdv);
+            check = lh.getId() == idCounter.getAndIncrement();
+            lh.close();
+        } catch (BKException e) {
+            check = e.getCode() == BKException.Code.NotEnoughBookiesException;
+        }catch ( IllegalArgumentException e){
+            check = ensSize <  0 || this.wQSize < this.aQSize;
+        } catch (NullPointerException e){
+            check = this.testOutcome.equals(TestOutcome.NULL);
+        } catch (InterruptedException e) {
+            fail();
+        }
+        assertTrue(check);
+    }
 
 
 
