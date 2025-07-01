@@ -211,7 +211,7 @@
             <artifactId>nar-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
-              <skip>false</skip>
+              <skip>true</skip>
               <linker>
                 <name>g++</name>
               </linker>
