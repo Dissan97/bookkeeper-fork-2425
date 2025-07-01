@@ -54,13 +54,13 @@
       <groupId>io.netty</groupId>
       <artifactId>netty-buffer</artifactId>
     </dependency>
-
+<!--
     <dependency>
       <groupId>org.apache.bookkeeper</groupId>
       <artifactId>testtools</artifactId>
       <version>${project.parent.version}</version>
       <scope>test</scope>
-    </dependency>
+    </dependency>-->
   </dependencies>
 
   <build>
@@ -68,6 +68,33 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.github.maven-nar</groupId>
+        <artifactId>nar-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <runtime>${nar.runtime}</runtime>
+          <output>circe-checksum</output>
+          <libraries>
+            <library>
+              <type>jni</type>
+              <narSystemPackage>com.scurrilous.circe.checksum</narSystemPackage>
+            </library>
+          </libraries>
+          <cpp>
+            <optionSet>${nar.cpp.optionSet}</optionSet>
+            <exceptions>false</exceptions>
+            <rtti>false</rtti>
+            <optimize>full</optimize>
+            <includes>
+              <include>**/*.cpp</include>
+            </includes>
+          </cpp>
+          <skipTests>${skipTests}</skipTests>
+          <!-- skip by default, enabled in OS profiles -->
+          <skip>true</skip>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -92,5 +119,107 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <!-- from JDK10 javah command is not available
+           see http://openjdk.java.net/jeps/313
+      -->
+      <id>jdk-without-javah</id>
+      <activation>
+         <jdk>[10,)</jdk>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.maven-nar</groupId>
+            <artifactId>nar-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <executions>
+               <execution>
+               <!-- javah is not present in JDK10 onwards,
+                    you have to to use javac -h -->
+                  <id>default-nar-javah</id>
+                  <phase>none</phase>
+               </execution>
+             </executions>
+          </plugin>
+          <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-compiler-plugin</artifactId>
+             <configuration>
+                <compilerArgs>
+                  <!-- add -h flag to javac -->
+                  <compilerArg>-h</compilerArg>
+                  <compilerArg>${project.build.directory}/nar/javah-include</compilerArg>
+                </compilerArgs>
+             </configuration>
+          </plugin>
+            </plugins>
+        </build>
+    </profile>
+    <profile>
+      <id>mac</id>
+      <activation>
+        <os>
+          <name>Mac OS X</name>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.maven-nar</groupId>
+            <artifactId>nar-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>Linux</id>
+      <activation>
+        <os>
+          <name>Linux</name>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.maven-nar</groupId>
+            <artifactId>nar-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>Windows</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.maven-nar</groupId>
+            <artifactId>nar-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+              <skip>true</skip>
+              <linker>
+                <name>g++</name>
+              </linker>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
