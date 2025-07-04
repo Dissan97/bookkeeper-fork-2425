@@ -21,25 +21,5 @@ jobs:
           distribution: 'corretto'
           cache: maven
 
-      - name: Install C/C++ dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            build-essential cmake gdb valgrind clang lldb manpages-dev
-
-      - name: Install original BookKeeper
-        run: |
-          mkdir tmp
-          cd tmp
-          git clone https://github.com/apache/bookkeeper.git
-          cd bookkeeper
-          git checkout 75ca02ff01ca5a4f760c38a1ffd17702f52010c9
-          mvn validate
-          mvn install -DskipTests
-
-      - name: validate
-        run: mvn validate
-
       - name: Test BookKeeper server module
-        working-directory: ./bookkeeper-server
-        run: mvn validate && mvn verify -B | grep -vE 'Downloading|Downloaded'
+        run: mvn validate && mvn verify

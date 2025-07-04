@@ -59,7 +59,6 @@
     <module>stats</module>
     <module>bookkeeper-proto</module>
     <module>bookkeeper-server</module>
-<!-- DISSAN compiler problem
     <module>bookkeeper-benchmark</module>
     <module>bookkeeper-http</module>
     <module>stream</module>
@@ -74,7 +73,7 @@
     <module>native-io</module>
     <module>testtools</module>
     <module>jacoco-report</module>
-    -->
+
   </modules>
   <mailingLists>
     <mailingList>
