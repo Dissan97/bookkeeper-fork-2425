@@ -37,13 +37,13 @@ public class AbsBkDelete {
         sut.setUp();
         ClientConfiguration conf = TestBKConfiguration.newClientConfiguration();
         conf.setMetadataServiceUri(sut.getZooKeeperCluster().getMetadataServiceUri());
-        conf.setZkTimeout(ZK_TIMEOUT);
+        //conf.setZkTimeout(ZK_TIMEOUT);
         try (BookKeeper bkDummy = new BookKeeper(conf)) {
             lastId = bkDummy.createLedger(BookKeeper.DigestType.DUMMY, VALID_PASSWORD).getId();
         }
         conf = TestBKConfiguration.newClientConfiguration();
         conf.setMetadataServiceUri(sut.getZooKeeperCluster().getMetadataServiceUri());
-        conf.setZkTimeout(ZK_TIMEOUT);
+        //conf.setZkTimeout(ZK_TIMEOUT);
         bkClient = new BookKeeper(conf);
     }
 

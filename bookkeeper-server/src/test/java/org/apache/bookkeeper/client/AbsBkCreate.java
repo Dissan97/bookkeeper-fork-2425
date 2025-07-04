@@ -52,7 +52,7 @@ public class AbsBkCreate {
         sut.setUp();
         ClientConfiguration conf = TestBKConfiguration.newClientConfiguration();
         conf.setMetadataServiceUri(sut.getZooKeeperCluster().getMetadataServiceUri());
-        conf.setZkTimeout(ZK_TIMEOUT);
+        //conf.setZkTimeout(ZK_TIMEOUT);
         bkClient = new BookKeeper(conf);
     }
 

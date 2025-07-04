@@ -44,7 +44,7 @@ public class AbsBkOpen {
         sut.setUp();
         ClientConfiguration conf = TestBKConfiguration.newClientConfiguration();
         conf.setMetadataServiceUri(sut.getZooKeeperCluster().getMetadataServiceUri());
-        conf.setZkTimeout(ZK_TIMEOUT);
+        //conf.setZkTimeout(ZK_TIMEOUT);
         BookKeeper bkDummy = new BookKeeper(conf);
         LedgerHandle lhDummy = bkDummy.createLedger(BookKeeper.DigestType.DUMMY, VALID_PASSWORD);
         validId = lhDummy.getId();
@@ -56,7 +56,7 @@ public class AbsBkOpen {
     public void setUp() throws Exception {
         ClientConfiguration conf = TestBKConfiguration.newClientConfiguration();
         conf.setMetadataServiceUri(sut.getZooKeeperCluster().getMetadataServiceUri());
-        conf.setZkTimeout(ZK_TIMEOUT);
+        //conf.setZkTimeout(ZK_TIMEOUT);
         bkClient = new BookKeeper(conf);
     }
 

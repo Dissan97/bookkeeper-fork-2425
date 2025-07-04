@@ -31,17 +31,5 @@ public class SUTForBookkeeper extends BookKeeperClusterTestCase {
         return instance;
     }
 
-    public static ClientConfiguration getSUTforEvosuite() {
-        SUTForBookkeeper sutForBookkeeper = new SUTForBookkeeper(3);
-        ClientConfiguration conf = TestBKConfiguration.newClientConfiguration();
-        conf.setMetadataServiceUri(sutForBookkeeper.getZooKeeperCluster().getMetadataServiceUri());
-        conf.setZkTimeout(ZK_TIMEOUT);
-        sutForBookkeeper = SUTForBookkeeper.getInstance(ENS_SIZE);
-        try {
-            sutForBookkeeper.setUp();
-        } catch (Exception ignored) {
-            // ignore
-        }
-        return conf;
-    }
+
 }
