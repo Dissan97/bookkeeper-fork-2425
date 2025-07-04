@@ -14,11 +14,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 11
+      - name: Set up JDK 8
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'corretto'  
+          java-version: '8'
+          distribution: 'corretto'
           cache: maven
 
       - name: Install C/C++ dependencies
@@ -27,12 +27,16 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             build-essential cmake gdb valgrind clang lldb manpages-dev
 
-      - name: Maven validate
-        run: mvn validate -B 2>&1 | grep -vE 'Downloading|Downloaded'
-
-      - name: Maven install pre-test 
-        run: mvn install -DskipTests -B 2>&1 | grep -vE 'Downloading|Downloaded'
+      - name: Install original BookKeeper
+        run: |
+          mkdir tmp
+          cd tmp
+          git clone https://github.com/apache/bookkeeper.git
+          cd bookkeeper
+          git checkout 75ca02ff01ca5a4f760c38a1ffd17702f52010c9
+          mvn validate
+          mvn install -DskipTests
 
       - name: Test BookKeeper server module
         working-directory: ./bookkeeper-server
-        run: mvn test -B 2>&1 | grep -vE 'Downloading|Downloaded'
+        run: mvn validate && mvn verify -B | grep -vE 'Downloading|Downloaded'
