@@ -59,7 +59,11 @@ public class AbsBkCreate {
     @After
     public void tearDown() throws Exception {
         // cleanup
-        this.bkClient.close();
+        try {
+            this.bkClient.close();
+        } catch (Exception ignored) {
+
+        }
         sut.tearDown();
     }
 

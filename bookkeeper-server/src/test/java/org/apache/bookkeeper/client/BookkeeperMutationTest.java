@@ -30,6 +30,9 @@ public class BookkeeperMutationTest {
         LedgerHandle lh = null;
         try {
             lh = bkClient.createLedger(BookKeeper.DigestType.DUMMY, "password".getBytes());
+            lh.close();
+            assertTrue(bkClient.isClosed(lh.getId()));
+            lh = bkClient.createLedger(BookKeeper.DigestType.DUMMY, "password".getBytes());
             bkClient.close();
             assertTrue(bkClient.isClosed());
             bkClient.isClosed(lh.getId());

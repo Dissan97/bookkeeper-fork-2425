@@ -450,8 +450,110 @@
       </build>
     </profile>
 
+
+    <!-- DISSAN
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++
+                  JACOCO COVERAGE PROFILES
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -->
+
     <profile>
-      <id>Bookkeeper-mutation</id>
+      <id>bk-cov</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <!-- Surefire: Solo test fatti a mano e generati da LLM -->
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${version.maven-surefire}</version>
+            <configuration>
+              <includes>
+                <include>**/client/**</include>
+              </includes>
+              <failIfNoTests>false</failIfNoTests>
+            </configuration>
+          </plugin>
+
+          <!-- JaCoCo Agent -->
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${version.jacoco-maven-plugin}</version>
+            <executions>
+              <execution>
+                <id>jacoco-prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>report</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>lh-cov</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <!-- Surefire: Solo test fatti a mano e generati da LLM -->
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${version.maven-surefire}</version>
+            <configuration>
+              <includes>
+                <include>**/client/LH*</include>
+              </includes>
+              <failIfNoTests>false</failIfNoTests>
+            </configuration>
+          </plugin>
+
+          <!-- JaCoCo Agent -->
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${version.jacoco-maven-plugin}</version>
+            <executions>
+              <execution>
+                <id>jacoco-prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>report</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- DISSAN
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++
+              MUTATION TESTS PROFILES
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -->
+
+
+    <profile>
+      <id>bk-pit</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>

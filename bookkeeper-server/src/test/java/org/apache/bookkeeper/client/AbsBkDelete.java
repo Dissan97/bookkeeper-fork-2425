@@ -50,7 +50,12 @@ public class AbsBkDelete {
 
     @After
     public  void tearDown() throws Exception {
-        bkClient.close();
+        try {
+            bkClient.close();
+        } catch (Exception ignored) {
+            //
+        }
+
         sut.tearDown();
     }
 

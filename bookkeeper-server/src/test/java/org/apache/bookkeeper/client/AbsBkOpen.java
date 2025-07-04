@@ -61,9 +61,13 @@ public class AbsBkOpen {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         // cleanup
-        this.bkClient.close();
+        try {
+            this.bkClient.close();
+        } catch (Exception ignored) {
+        }
+
     }
 
     @AfterClass

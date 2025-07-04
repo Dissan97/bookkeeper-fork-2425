@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.apache.bookkeeper.bookie.BookKeeperServerStats.*;
 
-public  class ServerTester {
+public class ServerTester {
         static final Logger LOG = LoggerFactory.getLogger(ServerTester.class);
         private final ServerConfiguration conf;
         private final TestStatsProvider provider;

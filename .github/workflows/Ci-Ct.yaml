@@ -37,6 +37,9 @@ jobs:
           mvn validate
           mvn install -DskipTests
 
+      - name: validate
+        run: mvn validate
+
       - name: Test BookKeeper server module
         working-directory: ./bookkeeper-server
         run: mvn validate && mvn verify -B | grep -vE 'Downloading|Downloaded'
