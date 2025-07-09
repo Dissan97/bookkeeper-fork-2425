@@ -315,6 +315,13 @@ public abstract class BookKeeperClusterTestCase {
                 return servers.get(index).getServer().getBookieId();
         }
 
+        /**
+         * Get bookie address for bookie at index.
+         */
+        public BookieServer getBookieServer(int index) throws Exception {
+                return servers.get(index).getServer();
+        }
+
         protected List<BookieId> bookieAddresses() throws Exception {
                 List<BookieId> bookieIds = new ArrayList<>();
                 for (ServerTester a : servers) {

@@ -1,0 +1,29 @@
+name: CI&CT-BookkeeperIT
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'corretto'
+          cache: maven
+
+      - name: Install dependencies
+        run: mvn validate install -DskipTests
+
+      - name: Integration testing (Failsafe)
+        run: mvn verify -Pit-test
+        working-directory: bookkeeper-server

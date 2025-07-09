@@ -536,7 +536,7 @@
                 <param>org.apache.bookkeeper.client.BookKeeper</param>
               </targetClasses>
               <targetTests>
-                <param>org.apache.bookkeeper.client.*</param>
+                <param>org.apache.bookkeeper.client.B*</param>
               </targetTests>
               <avoidCallsTo>
                 <avoidCallsTo>org.slf4j</avoidCallsTo>
@@ -557,5 +557,83 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>lh-pit</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <!-- For incremental analysis this should be commented out -->
+        <!-- <withHistory>true</withHistory> -->
+        <pitest.history.file>${project.build.directory}/pitest.history</pitest.history.file>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>${version.pitest-maven}</version>
+            <configuration>
+              <timeoutConstant>6000</timeoutConstant>
+              <timeoutFactor>0.0</timeoutFactor>
+              <verbose>false</verbose>
+              <threads>8</threads>
+              <targetClasses>
+                <param>org.apache.bookkeeper.client.LedgerHandle</param>
+              </targetClasses>
+              <targetTests>
+                <param>org.apache.bookkeeper.client.LH*</param>
+              </targetTests>
+              <avoidCallsTo>
+                <avoidCallsTo>org.slf4j</avoidCallsTo>
+              </avoidCallsTo>
+              <historyInputFile>${pitest.history.file}</historyInputFile>
+              <historyOutputFile>${pitest.history.file}</historyOutputFile>
+            </configuration>
+            <executions>
+              <execution>
+                <id>Generate PIT report</id>
+                <phase>test-compile</phase>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- IT profile-->
+    <profile>
+      <id>it-test</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${version.maven-surefire}</version>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${version.maven-surefire}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
 </project>

@@ -4,6 +4,8 @@ import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.conf.TestBKConfiguration;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
 import static org.apache.bookkeeper.client.SUTForBookkeeper.ENS_SIZE;
 import static org.apache.bookkeeper.client.SUTForBookkeeper.ZK_TIMEOUT;
@@ -15,7 +17,8 @@ public class LedgerHandleSUT {
     protected LedgerHandle lh;
     protected long lhId;
 
-
+    @Rule
+    public Timeout timeout = Timeout.seconds(5);
     @Before
     public void setUp() throws Exception {
         sut = SUTForBookkeeper.getInstance(ENS_SIZE);
