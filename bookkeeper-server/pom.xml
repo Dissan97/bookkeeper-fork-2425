@@ -26,13 +26,6 @@
   <name>Apache BookKeeper :: Server</name>
   <dependencies>
 
-    <!-- DISSAN ADDED -->
-    <dependency>
-      <groupId>org.evosuite</groupId>
-      <artifactId>evosuite-standalone-runtime</artifactId>
-      <version>1.2.0</version>
-    </dependency>
-
     <dependency>
       <groupId>org.apache.bookkeeper</groupId>
       <artifactId>bookkeeper-common</artifactId>

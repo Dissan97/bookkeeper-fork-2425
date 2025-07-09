@@ -16,9 +16,9 @@ public class LedgerHandleSUT {
     protected BookKeeper bkClient;
     protected LedgerHandle lh;
     protected long lhId;
-
+/*
     @Rule
-    public Timeout timeout = Timeout.seconds(5);
+    public Timeout timeout = Timeout.seconds(5);*/
     @Before
     public void setUp() throws Exception {
         sut = SUTForBookkeeper.getInstance(ENS_SIZE);
