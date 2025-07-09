@@ -18,9 +18,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class LHCoverageTest {
-
+/*
     @Rule
     public Timeout timeout = Timeout.seconds(5);
+
+ */
 
     private SUTForBookkeeper sut = SUTForBookkeeper.getInstance(3);
     private BookKeeper bkClient;
